@@ -49,6 +49,12 @@ func write_snapshot(sim) -> PackedByteArray:
 		_append_i32(bytes, sim.buildings.progress[id])
 		_append_string(bytes, sim.buildings.production_type[id])
 		_append_i32(bytes, sim.buildings.production_ticks[id])
+		_append_i32(bytes, sim.buildings.production_paid_food[id])
+		_append_i32(bytes, sim.buildings.production_paid_wood[id])
+		_append_i32(bytes, sim.buildings.production_paid_stone[id])
+		_append_i32(bytes, sim.buildings.production_acc_food[id])
+		_append_i32(bytes, sim.buildings.production_acc_wood[id])
+		_append_i32(bytes, sim.buildings.production_acc_stone[id])
 	return bytes
 
 func _append_i32(bytes: PackedByteArray, value: int) -> void:

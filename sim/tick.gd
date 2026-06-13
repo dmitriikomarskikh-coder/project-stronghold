@@ -367,24 +367,103 @@ func _apply_produce_command(command: Dictionary) -> void:
 		return
 	if buildings.production_type[building_id] != "":
 		return
-	var cost: Dictionary = balance["units"][unit_type]["cost"]
-	var player: int = buildings.owner[building_id]
-	if player_food[player] < int(cost.get("food", 0)):
-		return
-	player_food[player] -= int(cost.get("food", 0))
 	buildings.start_production(building_id, unit_type)
 
 func _step_building_production(building_id: int) -> void:
 	var type_name: String = buildings.production_type[building_id]
+	var player: int = buildings.owner[building_id]
+	var cfg: Dictionary = balance["units"][type_name]
+	var production_time := int(cfg["production_time"])
+	var cost: Dictionary = cfg["cost"]
+	var fully_paid := _production_is_paid(building_id, cost)
+	if live_units_for_player(player) >= unit_limit:
+		return
+	if not fully_paid:
+		var advanced := true
+		advanced = _advance_production_payment(building_id, player, "food", int(cost.get("food", 0)), production_time) and advanced
+		advanced = _advance_production_payment(building_id, player, "wood", int(cost.get("wood", 0)), production_time) and advanced
+		advanced = _advance_production_payment(building_id, player, "stone", int(cost.get("stone", 0)), production_time) and advanced
+		if not advanced:
+			return
+		fully_paid = _production_is_paid(building_id, cost)
 	buildings.production_ticks[building_id] += 1
-	if buildings.production_ticks[building_id] < int(balance["units"][type_name]["production_time"]):
+	if buildings.production_ticks[building_id] < production_time or not fully_paid:
 		return
 	var exit_tile: Vector2i = _dropoff_slot(building_id, Vector2i(buildings.anchor_x[building_id], buildings.anchor_y[building_id]))
 	if exit_tile.x < 0:
 		return
-	units.spawn(buildings.owner[building_id], type_name, exit_tile.x, exit_tile.y, int(balance["units"][type_name]["hp"]))
-	buildings.production_type[building_id] = ""
-	buildings.production_ticks[building_id] = 0
+	units.spawn(player, type_name, exit_tile.x, exit_tile.y, int(cfg["hp"]))
+	buildings.clear_production(building_id)
+
+func _advance_production_payment(building_id: int, player: int, resource_type: String, cost: int, production_time: int) -> bool:
+	if _get_production_paid(building_id, resource_type) >= cost:
+		return true
+	if _get_player_resource(player, resource_type) <= 0:
+		return false
+	_set_production_acc(building_id, resource_type, _get_production_acc(building_id, resource_type) + cost)
+	if _get_production_acc(building_id, resource_type) >= production_time:
+		_set_production_acc(building_id, resource_type, _get_production_acc(building_id, resource_type) - production_time)
+		_set_player_resource(player, resource_type, _get_player_resource(player, resource_type) - 1)
+		_set_production_paid(building_id, resource_type, _get_production_paid(building_id, resource_type) + 1)
+	return true
+
+func _production_is_paid(building_id: int, cost: Dictionary) -> bool:
+	return (
+		buildings.production_paid_food[building_id] >= int(cost.get("food", 0))
+		and buildings.production_paid_wood[building_id] >= int(cost.get("wood", 0))
+		and buildings.production_paid_stone[building_id] >= int(cost.get("stone", 0))
+	)
+
+func _get_player_resource(player: int, resource_type: String) -> int:
+	if resource_type == "food":
+		return player_food[player]
+	if resource_type == "wood":
+		return player_wood[player]
+	if resource_type == "stone":
+		return player_stone[player]
+	return 0
+
+func _set_player_resource(player: int, resource_type: String, value: int) -> void:
+	if resource_type == "food":
+		player_food[player] = value
+	elif resource_type == "wood":
+		player_wood[player] = value
+	elif resource_type == "stone":
+		player_stone[player] = value
+
+func _get_production_paid(building_id: int, resource_type: String) -> int:
+	if resource_type == "food":
+		return buildings.production_paid_food[building_id]
+	if resource_type == "wood":
+		return buildings.production_paid_wood[building_id]
+	if resource_type == "stone":
+		return buildings.production_paid_stone[building_id]
+	return 0
+
+func _set_production_paid(building_id: int, resource_type: String, value: int) -> void:
+	if resource_type == "food":
+		buildings.production_paid_food[building_id] = value
+	elif resource_type == "wood":
+		buildings.production_paid_wood[building_id] = value
+	elif resource_type == "stone":
+		buildings.production_paid_stone[building_id] = value
+
+func _get_production_acc(building_id: int, resource_type: String) -> int:
+	if resource_type == "food":
+		return buildings.production_acc_food[building_id]
+	if resource_type == "wood":
+		return buildings.production_acc_wood[building_id]
+	if resource_type == "stone":
+		return buildings.production_acc_stone[building_id]
+	return 0
+
+func _set_production_acc(building_id: int, resource_type: String, value: int) -> void:
+	if resource_type == "food":
+		buildings.production_acc_food[building_id] = value
+	elif resource_type == "wood":
+		buildings.production_acc_wood[building_id] = value
+	elif resource_type == "stone":
+		buildings.production_acc_stone[building_id] = value
 
 func _load_json(path: String) -> Dictionary:
 	var file := FileAccess.open(path, FileAccess.READ)

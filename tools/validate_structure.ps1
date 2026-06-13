@@ -16,6 +16,8 @@ $required = @(
     "config/assets_manifest.json",
     "maps/map01.json",
     "tests/determinism_test.gd",
+    "tests/economy_test.gd",
+    "tests/production_limit_test.gd",
     "tests/main_scene_smoke_test.gd",
     ".github/workflows/ci.yml"
 )

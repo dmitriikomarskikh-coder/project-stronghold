@@ -9,6 +9,12 @@ var hp: PackedInt32Array = PackedInt32Array()
 var progress: PackedInt32Array = PackedInt32Array()
 var production_type: PackedStringArray = PackedStringArray()
 var production_ticks: PackedInt32Array = PackedInt32Array()
+var production_paid_food: PackedInt32Array = PackedInt32Array()
+var production_paid_wood: PackedInt32Array = PackedInt32Array()
+var production_paid_stone: PackedInt32Array = PackedInt32Array()
+var production_acc_food: PackedInt32Array = PackedInt32Array()
+var production_acc_wood: PackedInt32Array = PackedInt32Array()
+var production_acc_stone: PackedInt32Array = PackedInt32Array()
 var free_list: Array[int] = []
 
 func spawn(player_id: int, type_name: String, tile_x: int, tile_y: int, max_hp: int, build_progress: int = 1) -> int:
@@ -22,6 +28,7 @@ func spawn(player_id: int, type_name: String, tile_x: int, tile_y: int, max_hp: 
 	progress[id] = build_progress
 	production_type[id] = ""
 	production_ticks[id] = 0
+	_reset_production_payment(id)
 	return id
 
 func live_count_for_player(player_id: int, include_zero_progress: bool = false) -> int:
@@ -61,6 +68,12 @@ func _allocate_slot() -> int:
 	progress.append(0)
 	production_type.append("")
 	production_ticks.append(0)
+	production_paid_food.append(0)
+	production_paid_wood.append(0)
+	production_paid_stone.append(0)
+	production_acc_food.append(0)
+	production_acc_wood.append(0)
+	production_acc_stone.append(0)
 	return id
 
 func start_production(id: int, type_name: String) -> void:
@@ -69,3 +82,19 @@ func start_production(id: int, type_name: String) -> void:
 	if production_type[id] == "":
 		production_type[id] = type_name
 		production_ticks[id] = 0
+		_reset_production_payment(id)
+
+func clear_production(id: int) -> void:
+	if id < 0 or id >= alive.size():
+		return
+	production_type[id] = ""
+	production_ticks[id] = 0
+	_reset_production_payment(id)
+
+func _reset_production_payment(id: int) -> void:
+	production_paid_food[id] = 0
+	production_paid_wood[id] = 0
+	production_paid_stone[id] = 0
+	production_acc_food[id] = 0
+	production_acc_wood[id] = 0
+	production_acc_stone[id] = 0
