@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+env:
+  GODOT_RELEASE: 4.6.3-stable
+  GODOT_TEMPLATES_DIR: ~/.local/share/godot/export_templates/4.6.3.stable
+
+jobs:
+  godot-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Godot
+        run: |
+          curl -L -o godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_RELEASE}/Godot_v${GODOT_RELEASE}_linux.x86_64.zip"
+          unzip godot.zip
+          sudo mv "Godot_v${GODOT_RELEASE}_linux.x86_64" /usr/local/bin/godot
+          sudo chmod +x /usr/local/bin/godot
+          godot --version
+      - name: Determinism test
+        run: godot --headless --script tests/determinism_test.gd
+      - name: Static architecture test
+        run: godot --headless --script tests/static_architecture_test.gd
+      - name: Economy test
+        run: godot --headless --script tests/economy_test.gd
+      - name: Combat test
+        run: godot --headless --script tests/combat_test.gd
+      - name: Main scene smoke test
+        run: godot --headless --script tests/main_scene_smoke_test.gd
+
+  windows-export:
+    runs-on: ubuntu-latest
+    needs: godot-tests
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Godot
+        run: |
+          curl -L -o godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_RELEASE}/Godot_v${GODOT_RELEASE}_linux.x86_64.zip"
+          unzip godot.zip
+          sudo mv "Godot_v${GODOT_RELEASE}_linux.x86_64" /usr/local/bin/godot
+          sudo chmod +x /usr/local/bin/godot
+          godot --version
+      - name: Install export templates
+        run: |
+          curl -L -o templates.tpz "https://github.com/godotengine/godot/releases/download/${GODOT_RELEASE}/Godot_v${GODOT_RELEASE}_export_templates.tpz"
+          mkdir -p "${GODOT_TEMPLATES_DIR}"
+          unzip templates.tpz
+          cp templates/* "${GODOT_TEMPLATES_DIR}/"
+      - name: Export Windows build
+        run: |
+          mkdir -p build
+          godot --headless --export-release "Windows Desktop"
+      - name: Package portable build
+        run: |
+          cd build
+          zip stronghold_v0.1-stage1_win64.zip ProjectStronghold.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stronghold_v0.1-stage1_win64
+          path: build/stronghold_v0.1-stage1_win64.zip
