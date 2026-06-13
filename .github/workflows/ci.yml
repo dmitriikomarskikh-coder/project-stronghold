@@ -26,6 +26,8 @@ jobs:
         run: godot --headless --script tests/static_architecture_test.gd
       - name: Economy test
         run: godot --headless --script tests/economy_test.gd
+      - name: Production limit test
+        run: godot --headless --script tests/production_limit_test.gd
       - name: Combat test
         run: godot --headless --script tests/combat_test.gd
       - name: Main scene smoke test
@@ -56,8 +58,8 @@ jobs:
       - name: Package portable build
         run: |
           cd build
-          zip stronghold_v0.1-stage1_win64.zip ProjectStronghold.exe
+          zip stronghold_v0.1-stage2_win64.zip ProjectStronghold.exe
       - uses: actions/upload-artifact@v4
         with:
-          name: stronghold_v0.1-stage1_win64
-          path: build/stronghold_v0.1-stage1_win64.zip
+          name: stronghold_v0.1-stage2_win64
+          path: build/stronghold_v0.1-stage2_win64.zip
