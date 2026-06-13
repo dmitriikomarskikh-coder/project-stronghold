@@ -1,0 +1,33 @@
+{
+  "size": [128, 128],
+  "regions": [
+    { "tile": "W", "rect": [58, 58, 12, 12] },
+    { "tile": "F", "rect": [10, 14, 12, 8] },
+    { "tile": "F", "rect": [106, 106, 12, 8] },
+    { "tile": "S", "rect": [27, 20, 8, 6] },
+    { "tile": "S", "rect": [93, 102, 8, 6] },
+    { "tile": "F", "rect": [35, 38, 10, 10] },
+    { "tile": "F", "rect": [83, 80, 10, 10] },
+    { "tile": "S", "rect": [78, 34, 7, 7] },
+    { "tile": "S", "rect": [43, 88, 7, 7] }
+  ],
+  "players": {
+    "0": {
+      "start_townhall": [20, 20],
+      "start_workers_area": [18, 22],
+      "base_center": [20, 20],
+      "resource_hint": { "wood": [15, 18], "stone": [30, 23] },
+      "tower_points": [[30, 29], [29, 30]],
+      "scout_waypoints": [[64, 64], [108, 108]]
+    },
+    "1": {
+      "start_townhall": [108, 108],
+      "start_workers_area": [106, 110],
+      "base_center": [108, 108],
+      "resource_hint": { "wood": [111, 110], "stone": [96, 105] },
+      "tower_points": [[98, 99], [99, 98]],
+      "scout_waypoints": [[64, 64], [20, 20]]
+    }
+  }
+}
+
