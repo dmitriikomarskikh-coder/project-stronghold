@@ -1,0 +1,8 @@
+{
+  "check_period_ticks": 20,
+  "worker_targets": [5, 10, 16],
+  "wave_start": 10,
+  "wave_multiplier": 1.5,
+  "scout_period_ticks": 900
+}
+
