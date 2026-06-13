@@ -1,0 +1,11 @@
+{
+  "attack_move": "A",
+  "form_up": "F",
+  "stop": "S",
+  "hold_position": "H",
+  "build": "B",
+  "control_groups": "Ctrl+1..9",
+  "cancel": "Esc",
+  "jump_to_event": "Space"
+}
+
