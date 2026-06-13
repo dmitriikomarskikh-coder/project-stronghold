@@ -15,6 +15,7 @@ var production_paid_stone: PackedInt32Array = PackedInt32Array()
 var production_acc_food: PackedInt32Array = PackedInt32Array()
 var production_acc_wood: PackedInt32Array = PackedInt32Array()
 var production_acc_stone: PackedInt32Array = PackedInt32Array()
+var production_queue: Array = []
 var free_list: Array[int] = []
 
 func spawn(player_id: int, type_name: String, tile_x: int, tile_y: int, max_hp: int, build_progress: int = 1) -> int:
@@ -28,6 +29,7 @@ func spawn(player_id: int, type_name: String, tile_x: int, tile_y: int, max_hp: 
 	progress[id] = build_progress
 	production_type[id] = ""
 	production_ticks[id] = 0
+	production_queue[id] = []
 	_reset_production_payment(id)
 	return id
 
@@ -74,6 +76,7 @@ func _allocate_slot() -> int:
 	production_acc_food.append(0)
 	production_acc_wood.append(0)
 	production_acc_stone.append(0)
+	production_queue.append([])
 	return id
 
 func start_production(id: int, type_name: String) -> void:
@@ -83,12 +86,26 @@ func start_production(id: int, type_name: String) -> void:
 		production_type[id] = type_name
 		production_ticks[id] = 0
 		_reset_production_payment(id)
+	else:
+		production_queue[id].append(type_name)
 
 func clear_production(id: int) -> void:
 	if id < 0 or id >= alive.size():
 		return
 	production_type[id] = ""
 	production_ticks[id] = 0
+	production_queue[id] = []
+	_reset_production_payment(id)
+
+func finish_current_production(id: int) -> void:
+	if id < 0 or id >= alive.size():
+		return
+	if production_queue[id].is_empty():
+		production_type[id] = ""
+		production_ticks[id] = 0
+	else:
+		production_type[id] = String(production_queue[id].pop_front())
+		production_ticks[id] = 0
 	_reset_production_payment(id)
 
 func _reset_production_payment(id: int) -> void:
