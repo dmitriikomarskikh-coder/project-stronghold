@@ -1,0 +1,86 @@
+{
+  "tick_ms": 100,
+  "unit_limit": 200,
+  "start_resources": {
+    "wood": 1000,
+    "stone": 1000,
+    "food": 1000
+  },
+  "build_resource_order": ["wood", "stone"],
+  "pathfinding": {
+    "straight_cost": 256,
+    "diagonal_cost": 362,
+    "max_path_tiles": 64,
+    "max_pathfinds_per_tick": 20,
+    "path_replan_cooldown_ticks": 10
+  },
+  "buildings": {
+    "townhall": {
+      "footprint": [3, 3],
+      "cost": { "wood": 250, "stone": 100 },
+      "hp": 1200,
+      "accepts_resources": true,
+      "vision_radius": 5
+    },
+    "farm": {
+      "footprint": [2, 2],
+      "cost": { "wood": 80, "stone": 0 },
+      "hp": 400,
+      "food_per_ticks": 10,
+      "vision_radius": 5
+    },
+    "barracks": {
+      "footprint": [3, 2],
+      "cost": { "wood": 120, "stone": 0 },
+      "hp": 800,
+      "vision_radius": 5
+    },
+    "storehouse": {
+      "footprint": [2, 2],
+      "cost": { "wood": 50, "stone": 30 },
+      "hp": 500,
+      "accepts_resources": true,
+      "vision_radius": 5
+    },
+    "wall": {
+      "footprint": [1, 1],
+      "cost": { "wood": 0, "stone": 10 },
+      "hp": 300,
+      "vision_radius": 0
+    },
+    "tower": {
+      "footprint": [1, 1],
+      "cost": { "wood": 20, "stone": 60 },
+      "hp": 600,
+      "attack_range": 6,
+      "attack_damage": 12,
+      "attack_period_ticks": 15,
+      "vision_radius": 5
+    }
+  },
+  "units": {
+    "peasant": {
+      "cost": { "food": 50, "wood": 0, "stone": 0 },
+      "production_time": 150,
+      "hp": 35,
+      "attack": 3,
+      "armor": 0,
+      "attack_period_ticks": 10,
+      "move_speed_per_tick": 51,
+      "vision_radius": 6,
+      "carry_capacity": 10
+    },
+    "warrior": {
+      "cost": { "food": 60, "wood": 20, "stone": 0 },
+      "production_time": 200,
+      "hp": 60,
+      "attack": 8,
+      "armor": 2,
+      "attack_period_ticks": 10,
+      "move_speed_per_tick": 51,
+      "formation_speed_per_tick": 38,
+      "vision_radius": 6
+    }
+  }
+}
+
