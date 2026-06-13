@@ -365,8 +365,6 @@ func _apply_produce_command(command: Dictionary) -> void:
 	var unit_type := String(command["params"].get("unit_type", "peasant"))
 	if unit_type != "peasant":
 		return
-	if buildings.production_type[building_id] != "":
-		return
 	buildings.start_production(building_id, unit_type)
 
 func _step_building_production(building_id: int) -> void:
@@ -393,7 +391,7 @@ func _step_building_production(building_id: int) -> void:
 	if exit_tile.x < 0:
 		return
 	units.spawn(player, type_name, exit_tile.x, exit_tile.y, int(cfg["hp"]))
-	buildings.clear_production(building_id)
+	buildings.finish_current_production(building_id)
 
 func _advance_production_payment(building_id: int, player: int, resource_type: String, cost: int, production_time: int) -> bool:
 	if _get_production_paid(building_id, resource_type) >= cost:
