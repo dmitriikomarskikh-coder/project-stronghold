@@ -25,6 +25,19 @@ func write_snapshot(sim) -> PackedByteArray:
 		_append_i32(bytes, sim.units.pos_y[id])
 		_append_i32(bytes, sim.units.hp[id])
 		_append_i32(bytes, sim.units.facing[id])
+		_append_string(bytes, sim.units.order_type[id])
+		_append_i32(bytes, sim.units.target_x[id])
+		_append_i32(bytes, sim.units.target_y[id])
+		_append_i32(bytes, sim.units.work_x[id])
+		_append_i32(bytes, sim.units.work_y[id])
+		_append_i32(bytes, sim.units.gather_acc[id])
+		_append_string(bytes, sim.units.carry_type[id])
+		_append_i32(bytes, sim.units.carry_amount[id])
+		_append_i32(bytes, sim.units.path_index[id])
+		_append_i32(bytes, sim.units.path[id].size())
+		for tile in sim.units.path[id]:
+			_append_i32(bytes, tile.x)
+			_append_i32(bytes, tile.y)
 	_append_i32(bytes, sim.buildings.alive.size())
 	for id in range(sim.buildings.alive.size()):
 		_append_i32(bytes, 1 if sim.buildings.alive[id] else 0)
@@ -34,6 +47,8 @@ func write_snapshot(sim) -> PackedByteArray:
 		_append_i32(bytes, sim.buildings.anchor_y[id])
 		_append_i32(bytes, sim.buildings.hp[id])
 		_append_i32(bytes, sim.buildings.progress[id])
+		_append_string(bytes, sim.buildings.production_type[id])
+		_append_i32(bytes, sim.buildings.production_ticks[id])
 	return bytes
 
 func _append_i32(bytes: PackedByteArray, value: int) -> void:

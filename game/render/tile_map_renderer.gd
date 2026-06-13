@@ -13,6 +13,7 @@ var map_state
 var buildings
 var units
 var balance := {}
+var selected_units: Array[int] = []
 
 func draw_map(state: Tile) -> void:
 	map_state = state
@@ -23,6 +24,12 @@ func draw_state(state, buildings_state, units_state, balance_config: Dictionary)
 	buildings = buildings_state
 	units = units_state
 	balance = balance_config
+	queue_redraw()
+
+func set_selected_units(ids: Array) -> void:
+	selected_units = []
+	for id in ids:
+		selected_units.append(int(id))
 	queue_redraw()
 
 func _draw() -> void:
@@ -65,6 +72,8 @@ func _draw_units() -> void:
 		var color := Color(0.92, 0.86, 0.58) if units.owner[id] == 0 else Color(0.78, 0.30, 0.30)
 		draw_circle(pos + Vector2(tile_size * 0.5, tile_size * 0.5), 7.0, color)
 		draw_circle(pos + Vector2(tile_size * 0.5, tile_size * 0.5), 7.0, Color.BLACK, false, 1.0)
+		if selected_units.has(id):
+			draw_arc(pos + Vector2(tile_size * 0.5, tile_size * 0.5), 11.0, 0.0, TAU, 32, Color(0.2, 1.0, 0.2), 2.0)
 
 func _building_footprint(type_name: String) -> Vector2i:
 	if balance.has("buildings") and balance["buildings"].has(type_name):

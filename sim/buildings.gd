@@ -7,6 +7,8 @@ var anchor_x: PackedInt32Array = PackedInt32Array()
 var anchor_y: PackedInt32Array = PackedInt32Array()
 var hp: PackedInt32Array = PackedInt32Array()
 var progress: PackedInt32Array = PackedInt32Array()
+var production_type: PackedStringArray = PackedStringArray()
+var production_ticks: PackedInt32Array = PackedInt32Array()
 var free_list: Array[int] = []
 
 func spawn(player_id: int, type_name: String, tile_x: int, tile_y: int, max_hp: int, build_progress: int = 1) -> int:
@@ -18,6 +20,8 @@ func spawn(player_id: int, type_name: String, tile_x: int, tile_y: int, max_hp: 
 	anchor_y[id] = tile_y
 	hp[id] = max_hp
 	progress[id] = build_progress
+	production_type[id] = ""
+	production_ticks[id] = 0
 	return id
 
 func live_count_for_player(player_id: int, include_zero_progress: bool = false) -> int:
@@ -26,6 +30,23 @@ func live_count_for_player(player_id: int, include_zero_progress: bool = false) 
 		if alive[id] and owner[id] == player_id and (include_zero_progress or progress[id] > 0):
 			count += 1
 	return count
+
+func first_dropoff_for_player(player_id: int, balance: Dictionary, from_tile: Vector2i) -> int:
+	var best_id := -1
+	var best_dist := 999999999
+	for id in range(alive.size()):
+		if not alive[id] or owner[id] != player_id or progress[id] <= 0:
+			continue
+		var cfg: Dictionary = balance["buildings"].get(building_type[id], {})
+		if not bool(cfg.get("accepts_resources", false)):
+			continue
+		var footprint: Array = cfg.get("footprint", [1, 1])
+		var center := Vector2i(anchor_x[id] + int(footprint[0] / 2), anchor_y[id] + int(footprint[1] / 2))
+		var dist := (center.x - from_tile.x) * (center.x - from_tile.x) + (center.y - from_tile.y) * (center.y - from_tile.y)
+		if dist < best_dist or (dist == best_dist and id < best_id):
+			best_dist = dist
+			best_id = id
+	return best_id
 
 func _allocate_slot() -> int:
 	if free_list.size() > 0:
@@ -38,4 +59,13 @@ func _allocate_slot() -> int:
 	anchor_y.append(0)
 	hp.append(0)
 	progress.append(0)
+	production_type.append("")
+	production_ticks.append(0)
 	return id
+
+func start_production(id: int, type_name: String) -> void:
+	if id < 0 or id >= alive.size() or not alive[id]:
+		return
+	if production_type[id] == "":
+		production_type[id] = type_name
+		production_ticks[id] = 0

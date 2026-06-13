@@ -43,6 +43,27 @@ func in_bounds(x: int, y: int) -> bool:
 func tile_type_at(x: int, y: int) -> int:
 	return tiles[index(x, y)]
 
+func resource_type_at(x: int, y: int) -> String:
+	match tile_type_at(x, y):
+		TileType.FOREST:
+			return "wood"
+		TileType.STONE:
+			return "stone"
+		_:
+			return ""
+
+func resource_left_at(x: int, y: int) -> int:
+	return resource_amount[index(x, y)]
+
+func take_resource(x: int, y: int, amount: int) -> int:
+	var i := index(x, y)
+	var taken: int = min(resource_amount[i], amount)
+	resource_amount[i] -= taken
+	if resource_amount[i] <= 0 and (tiles[i] == TileType.FOREST or tiles[i] == TileType.STONE):
+		tiles[i] = TileType.GRASS
+		resource_amount[i] = 0
+	return taken
+
 func is_walkable(x: int, y: int) -> bool:
 	if not in_bounds(x, y):
 		return false

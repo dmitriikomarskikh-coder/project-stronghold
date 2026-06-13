@@ -3,6 +3,7 @@ extends RefCounted
 const TYPES := {
 	"move": true,
 	"stop": true,
+	"gather": true,
 	"attack_move": true,
 	"attack_target": true,
 	"build_place": true,
@@ -54,4 +55,3 @@ func _command_less(a: Dictionary, b: Dictionary) -> bool:
 	if int(a["player_id"]) != int(b["player_id"]):
 		return int(a["player_id"]) < int(b["player_id"])
 	return int(a["seq"]) < int(b["seq"])
-

@@ -11,6 +11,7 @@ $required = @(
     "sim/snapshot.gd",
     "game/main.tscn",
     "game/main.gd",
+    "game/input/player_input.gd",
     "config/balance.json",
     "config/assets_manifest.json",
     "maps/map01.json",
