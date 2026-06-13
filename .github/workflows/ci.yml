@@ -28,6 +28,8 @@ jobs:
         run: godot --headless --script tests/economy_test.gd
       - name: Production limit test
         run: godot --headless --script tests/production_limit_test.gd
+      - name: Production queue test
+        run: godot --headless --script tests/production_queue_test.gd
       - name: Combat test
         run: godot --headless --script tests/combat_test.gd
       - name: Main scene smoke test
