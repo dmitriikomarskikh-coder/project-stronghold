@@ -1,0 +1,25 @@
+{
+  "tiles": {
+    "grass": { "source": "placeholder", "path": "" },
+    "forest": { "source": "placeholder", "path": "" },
+    "stone": { "source": "placeholder", "path": "" },
+    "water": { "source": "placeholder", "path": "" }
+  },
+  "units": {
+    "peasant": {},
+    "warrior": {}
+  },
+  "buildings": {
+    "townhall": {},
+    "farm": {},
+    "barracks": {},
+    "storehouse": {},
+    "wall": {},
+    "tower": {}
+  },
+  "portraits": {
+    "portrait_peasant": "",
+    "portrait_warrior": ""
+  }
+}
+
