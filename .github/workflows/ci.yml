@@ -6,7 +6,7 @@ on:
 
 env:
   GODOT_RELEASE: 4.6.3-stable
-  GODOT_TEMPLATES_DIR: ~/.local/share/godot/export_templates/4.6.3.stable
+  GODOT_TEMPLATES_DIR: /home/runner/.local/share/godot/export_templates/4.6.3.stable
 
 jobs:
   godot-tests:
