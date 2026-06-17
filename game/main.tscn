@@ -36,5 +36,61 @@ offset_left = 12.0
 offset_top = 42.0
 offset_right = 620.0
 offset_bottom = 70.0
-text = "Stage 1: full visibility debug mode"
+text = "Fog enabled"
 
+[node name="Warning" type="Label" parent="CanvasLayer/Hud"]
+visible = false
+layout_mode = 0
+offset_left = 12.0
+offset_top = 76.0
+offset_right = 620.0
+offset_bottom = 104.0
+theme_override_colors/font_color = Color(1, 0.18, 0.12, 1)
+text = "Under attack"
+
+[node name="Result" type="Label" parent="CanvasLayer/Hud"]
+visible = false
+layout_mode = 0
+offset_left = 12.0
+offset_top = 108.0
+offset_right = 420.0
+offset_bottom = 144.0
+theme_override_font_sizes/font_size = 24
+text = "Victory | Time 00:00"
+
+[node name="Minimap" type="Control" parent="CanvasLayer/Hud"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 430.0
+offset_right = 172.0
+offset_bottom = 590.0
+
+[node name="Menu" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -44.0
+offset_right = 90.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NewGame" type="Button" parent="CanvasLayer/Menu"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 180.0
+offset_bottom = 36.0
+text = "New Game"
+
+[node name="Exit" type="Button" parent="CanvasLayer/Menu"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 48.0
+offset_right = 180.0
+offset_bottom = 84.0
+text = "Exit"

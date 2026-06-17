@@ -2,15 +2,19 @@
 
 RTS prototype for version 0.1, based on `TZ_RTS_v0.3.1.md`.
 
-## Stage 1 Scope
+## Current Scope
 
-- Godot 4.6.3 project skeleton with Compatibility renderer.
-- Fixed-tick simulation scaffold.
-- Command schema and deterministic command ordering.
-- JSON map loading.
-- Camera and tile rendering in full-visibility debug mode.
-- Headless determinism smoke test.
-- CI workflow for tests and Windows export.
+- Playable Windows RTS prototype against AI.
+- Deterministic fixed-tick simulation, command log, binary snapshots, CI tests.
+- Economy: wood, stone, food, gathering, passive farms, construction, production, starvation, unit limit.
+- Combat: warriors, towers, attack-move, stances, target acquisition, victory condition.
+- Platoons: form/disband, formation movement, broken/regroup feedback.
+- Fog of war, known building ghosts, minimap, warnings, result screen, minimal audio feedback.
+- Windows portable export and Inno Setup installer.
+
+## Assets
+
+The renderer loads visual fallback data from `config/assets_manifest.json`. Tiny Swords is the intended final art pack, but raw pack files are not committed because the TZ forbids redistributing the pack as standalone assets. See `assets/licenses/PACK_VERSION.md`.
 
 ## Local Commands
 

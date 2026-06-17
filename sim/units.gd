@@ -15,6 +15,15 @@ var work_y: PackedInt32Array = PackedInt32Array()
 var gather_acc: PackedInt32Array = PackedInt32Array()
 var carry_type: PackedStringArray = PackedStringArray()
 var carry_amount: PackedInt32Array = PackedInt32Array()
+var subslot: PackedInt32Array = PackedInt32Array()
+var path_request_seq: PackedInt32Array = PackedInt32Array()
+var attack_target_id: PackedInt32Array = PackedInt32Array()
+var attack_target_kind: PackedStringArray = PackedStringArray()
+var attack_cooldown: PackedInt32Array = PackedInt32Array()
+var stance: PackedStringArray = PackedStringArray()
+var build_target_id: PackedInt32Array = PackedInt32Array()
+var platoon_id: PackedInt32Array = PackedInt32Array()
+var platoon_slot: PackedInt32Array = PackedInt32Array()
 var path: Array = []
 var path_index: PackedInt32Array = PackedInt32Array()
 var skills: Array = []
@@ -37,6 +46,15 @@ func spawn(player_id: int, type_name: String, tile_x: int, tile_y: int, max_hp: 
 	gather_acc[id] = 0
 	carry_type[id] = ""
 	carry_amount[id] = 0
+	subslot[id] = 0
+	path_request_seq[id] = 0
+	attack_target_id[id] = -1
+	attack_target_kind[id] = ""
+	attack_cooldown[id] = 0
+	stance[id] = "defense"
+	build_target_id[id] = -1
+	platoon_id[id] = -1
+	platoon_slot[id] = -1
 	path[id] = []
 	path_index[id] = 0
 	skills[id] = []
@@ -48,6 +66,8 @@ func mark_dead(id: int) -> void:
 
 func cleanup_dead() -> void:
 	for id in range(alive.size()):
+		if alive[id] and hp[id] <= 0:
+			alive[id] = false
 		if not alive[id] and not free_list.has(id):
 			free_list.append(id)
 	free_list.sort()
@@ -78,6 +98,15 @@ func _allocate_slot() -> int:
 	gather_acc.append(0)
 	carry_type.append("")
 	carry_amount.append(0)
+	subslot.append(0)
+	path_request_seq.append(0)
+	attack_target_id.append(-1)
+	attack_target_kind.append("")
+	attack_cooldown.append(0)
+	stance.append("defense")
+	build_target_id.append(-1)
+	platoon_id.append(-1)
+	platoon_slot.append(-1)
 	path.append([])
 	path_index.append(0)
 	skills.append([])
@@ -115,13 +144,58 @@ func set_return_order(id: int, drop_x: int, drop_y: int, new_path: Array) -> voi
 	path[id] = new_path.duplicate()
 	path_index[id] = 0
 
+func set_attack_move_order(id: int, tile_x: int, tile_y: int, new_path: Array) -> void:
+	if id < 0 or id >= alive.size() or not alive[id]:
+		return
+	order_type[id] = "attack_move"
+	target_x[id] = tile_x
+	target_y[id] = tile_y
+	attack_target_id[id] = -1
+	attack_target_kind[id] = ""
+	gather_acc[id] = 0
+	path[id] = new_path.duplicate()
+	path_index[id] = 0
+
+func set_attack_target_order(id: int, target_id: int, target_kind: String, tile_x: int, tile_y: int, new_path: Array) -> void:
+	if id < 0 or id >= alive.size() or not alive[id]:
+		return
+	order_type[id] = "attack_target"
+	attack_target_id[id] = target_id
+	attack_target_kind[id] = target_kind
+	target_x[id] = tile_x
+	target_y[id] = tile_y
+	gather_acc[id] = 0
+	path[id] = new_path.duplicate()
+	path_index[id] = 0
+
+func set_build_order(id: int, building_id: int, slot_x: int, slot_y: int, new_path: Array) -> void:
+	if id < 0 or id >= alive.size() or not alive[id]:
+		return
+	order_type[id] = "build_to_site"
+	build_target_id[id] = building_id
+	target_x[id] = slot_x
+	target_y[id] = slot_y
+	gather_acc[id] = 0
+	path[id] = new_path.duplicate()
+	path_index[id] = 0
+
 func stop(id: int) -> void:
 	if id < 0 or id >= alive.size():
 		return
 	order_type[id] = "idle"
+	path_request_seq[id] += 1
+	attack_target_id[id] = -1
+	attack_target_kind[id] = ""
+	build_target_id[id] = -1
 	gather_acc[id] = 0
 	path[id] = []
 	path_index[id] = 0
+
+func set_stance(id: int, new_stance: String) -> void:
+	if id < 0 or id >= alive.size() or not alive[id]:
+		return
+	if new_stance == "defense" or new_stance == "hold":
+		stance[id] = new_stance
 
 func tile_x(id: int) -> int:
 	return int(pos_x[id] / 256)

@@ -1,8 +1,11 @@
 {
   "check_period_ticks": 20,
   "worker_targets": [5, 10, 16],
+  "farm_targets": [1, 2, 3, 4],
+  "barracks_min_workers": 6,
+  "builders_per_site": 3,
+  "tower_start_tick": 1200,
   "wave_start": 10,
   "wave_multiplier": 1.5,
   "scout_period_ticks": 900
 }
-

@@ -1,25 +1,34 @@
 {
   "tiles": {
-    "grass": { "source": "placeholder", "path": "" },
-    "forest": { "source": "placeholder", "path": "" },
-    "stone": { "source": "placeholder", "path": "" },
-    "water": { "source": "placeholder", "path": "" }
+    "grass": { "source": "generated_internal", "color": "#388C38", "license": "project_fallback" },
+    "forest": { "source": "generated_internal", "color": "#0D471C", "license": "project_fallback" },
+    "stone": { "source": "generated_internal", "color": "#73737A", "license": "project_fallback" },
+    "water": { "source": "generated_internal", "color": "#1A4D9E", "license": "project_fallback" }
   },
   "units": {
-    "peasant": {},
-    "warrior": {}
+    "peasant": {
+      "source": "generated_internal",
+      "license": "project_fallback",
+      "colors": { "player_0": "#EBD894", "player_1": "#C74D4D" },
+      "animations": { "idle": {}, "walk": {}, "attack": {}, "death": {}, "gather": {}, "build": {}, "carry": {} }
+    },
+    "warrior": {
+      "source": "generated_internal",
+      "license": "project_fallback",
+      "colors": { "player_0": "#EBD894", "player_1": "#C74D4D" },
+      "animations": { "idle": {}, "walk": {}, "attack": {}, "death": {} }
+    }
   },
   "buildings": {
-    "townhall": {},
-    "farm": {},
-    "barracks": {},
-    "storehouse": {},
-    "wall": {},
-    "tower": {}
+    "townhall": { "source": "generated_internal", "license": "project_fallback", "label": "TH", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "states": { "frame": {}, "build_50": {}, "ready": {} } },
+    "farm": { "source": "generated_internal", "license": "project_fallback", "label": "FA", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "states": { "frame": {}, "build_50": {}, "ready": {} } },
+    "barracks": { "source": "generated_internal", "license": "project_fallback", "label": "BA", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "states": { "frame": {}, "build_50": {}, "ready": {} } },
+    "storehouse": { "source": "generated_internal", "license": "project_fallback", "label": "ST", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "states": { "frame": {}, "build_50": {}, "ready": {} } },
+    "wall": { "source": "generated_internal", "license": "project_fallback", "label": "WA", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "states": { "frame": {}, "build_50": {}, "ready": {} } },
+    "tower": { "source": "generated_internal", "license": "project_fallback", "label": "TO", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "states": { "frame": {}, "build_50": {}, "ready": {} } }
   },
   "portraits": {
-    "portrait_peasant": "",
-    "portrait_warrior": ""
+    "portrait_peasant": { "source": "generated_internal", "license": "project_fallback", "path": "" },
+    "portrait_warrior": { "source": "generated_internal", "license": "project_fallback", "path": "" }
   }
 }
-

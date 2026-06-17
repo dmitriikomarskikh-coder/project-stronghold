@@ -24,16 +24,70 @@ jobs:
         run: godot --headless --script tests/determinism_test.gd
       - name: Static architecture test
         run: godot --headless --script tests/static_architecture_test.gd
+      - name: Assets manifest test
+        run: godot --headless --script tests/assets_manifest_test.gd
       - name: Economy test
         run: godot --headless --script tests/economy_test.gd
       - name: Production limit test
         run: godot --headless --script tests/production_limit_test.gd
       - name: Production queue test
         run: godot --headless --script tests/production_queue_test.gd
+      - name: Cancel production test
+        run: godot --headless --script tests/cancel_production_test.gd
+      - name: Barracks production test
+        run: godot --headless --script tests/barracks_production_test.gd
+      - name: Building construction test
+        run: godot --headless --script tests/building_construction_test.gd
+      - name: Building frame hygiene test
+        run: godot --headless --script tests/building_frame_hygiene_test.gd
+      - name: Demolish test
+        run: godot --headless --script tests/demolish_test.gd
+      - name: Food flow test
+        run: godot --headless --script tests/food_flow_test.gd
+      - name: Loot items test
+        run: godot --headless --script tests/loot_items_test.gd
+      - name: Crowd subslot test
+        run: godot --headless --script tests/crowd_subslot_test.gd
+      - name: Group move fan test
+        run: godot --headless --script tests/group_move_fan_test.gd
+      - name: 50 unit pathfinding test
+        run: godot --headless --script tests/pathfinding_50_units_test.gd
+      - name: Pathfinding budget test
+        run: godot --headless --script tests/pathfinding_budget_test.gd
+      - name: Resource slot test
+        run: godot --headless --script tests/resource_slot_test.gd
+      - name: Resource multi-slot test
+        run: godot --headless --script tests/resource_multi_slot_test.gd
+      - name: Resource return budget test
+        run: godot --headless --script tests/resource_return_budget_test.gd
+      - name: Fog test
+        run: godot --headless --script tests/fog_test.gd
+      - name: AI controller test
+        run: godot --headless --script tests/ai_controller_test.gd
+      - name: AI build order test
+        run: godot --headless --script tests/ai_build_order_test.gd
+      - name: AI fog test
+        run: godot --headless --script tests/ai_fog_test.gd
+      - name: Attack event test
+        run: godot --headless --script tests/attack_event_test.gd
+      - name: Platoon form-up test
+        run: godot --headless --script tests/platoon_form_up_test.gd
+      - name: Platoon move formation test
+        run: godot --headless --script tests/platoon_move_formation_test.gd
+      - name: Platoon disband test
+        run: godot --headless --script tests/platoon_disband_test.gd
+      - name: Platoon regroup test
+        run: godot --headless --script tests/platoon_regroup_test.gd
       - name: Combat test
         run: godot --headless --script tests/combat_test.gd
       - name: Main scene smoke test
         run: godot --headless --script tests/main_scene_smoke_test.gd
+      - name: Minimap smoke test
+        run: godot --headless --script tests/minimap_smoke_test.gd
+      - name: Player input build mode test
+        run: godot --headless --script tests/player_input_build_mode_test.gd
+      - name: Player input selection test
+        run: godot --headless --script tests/player_input_selection_test.gd
 
   windows-export:
     runs-on: ubuntu-latest

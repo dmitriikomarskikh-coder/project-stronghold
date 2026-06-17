@@ -8,11 +8,13 @@ func _init() -> void:
 	var initial_units: int = sim.live_units_for_player(0)
 	var initial_food: int = sim.player_food[0]
 	var initial_wood: int = sim.player_wood[0]
+	var initial_stone: int = sim.player_stone[0]
 	var initial_resource_left: int = _total_resource_left(sim)
 
 	sim.enqueue_player_command("produce", [], [], {"unit_type": "peasant"})
 	sim.enqueue_player_command("gather", [0, 1], [15, 18])
-	for i in range(500):
+	sim.enqueue_player_command("gather", [2, 3], [30, 23])
+	for i in range(700):
 		sim.step()
 
 	if sim.live_units_for_player(0) <= initial_units:
@@ -29,6 +31,10 @@ func _init() -> void:
 		return
 	if sim.player_wood[0] <= initial_wood:
 		push_error("Expected workers to deposit harvested wood")
+		quit(1)
+		return
+	if sim.player_stone[0] <= initial_stone:
+		push_error("Expected workers to deposit harvested stone")
 		quit(1)
 		return
 	print("Economy test passed")
