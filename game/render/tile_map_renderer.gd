@@ -114,7 +114,11 @@ func _draw_building(id: int, ghost: bool) -> void:
 	var color: Color = assets_manifest.building_color(type_name, owner_id, fallback_building_colors.get(owner_id, Color(0.44, 0.25, 0.25)))
 	if ghost:
 		color.a = 0.38
-	draw_rect(rect, color)
+	var sprite: Dictionary = assets_manifest.building_sprite(type_name, owner_id)
+	if sprite.has("texture"):
+		draw_texture_rect_region(sprite["texture"], rect, sprite["region"], color if ghost else Color.WHITE)
+	else:
+		draw_rect(rect, color)
 	draw_rect(rect, Color.BLACK, false, 2.0)
 	if selected_building_id == id:
 		draw_rect(rect.grow(3.0), Color(0.2, 1.0, 0.2), false, 3.0)
@@ -137,14 +141,20 @@ func _draw_units() -> void:
 		var offset := _subslot_offset(units.subslot[id])
 		var owner_id: int = units.owner[id]
 		var color: Color = assets_manifest.unit_color(units.unit_type[id], owner_id, fallback_unit_colors.get(owner_id, Color(0.78, 0.30, 0.30)))
-		draw_circle(pos + Vector2(tile_size * 0.5, tile_size * 0.5) + offset, 7.0, color)
-		draw_circle(pos + Vector2(tile_size * 0.5, tile_size * 0.5) + offset, 7.0, Color.BLACK, false, 1.0)
+		var sprite: Dictionary = assets_manifest.unit_sprite(units.unit_type[id], owner_id)
+		var center := pos + Vector2(tile_size * 0.5, tile_size * 0.5) + offset
+		if sprite.has("texture"):
+			var sprite_rect := Rect2(center - Vector2(13, 18), Vector2(26, 26))
+			draw_texture_rect_region(sprite["texture"], sprite_rect, sprite["region"])
+		else:
+			draw_circle(center, 7.0, color)
+			draw_circle(center, 7.0, Color.BLACK, false, 1.0)
 		if _unit_platoon_broken(id):
-			var marker_center := pos + Vector2(tile_size * 0.5, tile_size * 0.5) + offset
+			var marker_center := center
 			draw_line(marker_center + Vector2(-8, -8), marker_center + Vector2(8, 8), Color(1.0, 0.55, 0.05), 2.0)
 			draw_line(marker_center + Vector2(8, -8), marker_center + Vector2(-8, 8), Color(1.0, 0.55, 0.05), 2.0)
 		if selected_units.has(id):
-			draw_arc(pos + Vector2(tile_size * 0.5, tile_size * 0.5) + offset, 11.0, 0.0, TAU, 32, Color(0.2, 1.0, 0.2), 2.0)
+			draw_arc(center, 11.0, 0.0, TAU, 32, Color(0.2, 1.0, 0.2), 2.0)
 		if selected_units.has(id) or _unit_is_damaged(id) or units.owner[id] != viewer_player_id:
 			_draw_unit_hp_bar(id, pos + offset)
 

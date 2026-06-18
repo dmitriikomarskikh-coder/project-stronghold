@@ -7,25 +7,33 @@
   },
   "units": {
     "peasant": {
-      "source": "generated_internal",
-      "license": "project_fallback",
+      "source": "tiny_swords_free_pack",
+      "license": "Tiny Swords by Pixel Frog, local in-game derived use",
       "colors": { "player_0": "#EBD894", "player_1": "#C74D4D" },
+      "sprites": {
+        "player_0": { "path": "res://assets/tiny_swords/units/blue_pawn_idle.png", "region": [0, 0, 192, 192] },
+        "player_1": { "path": "res://assets/tiny_swords/units/red_pawn_idle.png", "region": [0, 0, 192, 192] }
+      },
       "animations": { "idle": {}, "walk": {}, "attack": {}, "death": {}, "gather": {}, "build": {}, "carry": {} }
     },
     "warrior": {
-      "source": "generated_internal",
-      "license": "project_fallback",
+      "source": "tiny_swords_free_pack",
+      "license": "Tiny Swords by Pixel Frog, local in-game derived use",
       "colors": { "player_0": "#EBD894", "player_1": "#C74D4D" },
+      "sprites": {
+        "player_0": { "path": "res://assets/tiny_swords/units/blue_warrior_idle.png", "region": [0, 0, 192, 192] },
+        "player_1": { "path": "res://assets/tiny_swords/units/red_warrior_idle.png", "region": [0, 0, 192, 192] }
+      },
       "animations": { "idle": {}, "walk": {}, "attack": {}, "death": {} }
     }
   },
   "buildings": {
-    "townhall": { "source": "generated_internal", "license": "project_fallback", "label": "TH", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "states": { "frame": {}, "build_50": {}, "ready": {} } },
-    "farm": { "source": "generated_internal", "license": "project_fallback", "label": "FA", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "states": { "frame": {}, "build_50": {}, "ready": {} } },
-    "barracks": { "source": "generated_internal", "license": "project_fallback", "label": "BA", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "states": { "frame": {}, "build_50": {}, "ready": {} } },
-    "storehouse": { "source": "generated_internal", "license": "project_fallback", "label": "ST", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "states": { "frame": {}, "build_50": {}, "ready": {} } },
+    "townhall": { "source": "tiny_swords_free_pack", "license": "Tiny Swords by Pixel Frog, local in-game derived use", "label": "TH", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "sprites": { "player_0": { "path": "res://assets/tiny_swords/buildings/blue_castle.png" }, "player_1": { "path": "res://assets/tiny_swords/buildings/red_castle.png" } }, "states": { "frame": {}, "build_50": {}, "ready": {} } },
+    "farm": { "source": "tiny_swords_free_pack", "license": "Tiny Swords by Pixel Frog, local in-game derived use", "label": "FA", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "sprites": { "player_0": { "path": "res://assets/tiny_swords/buildings/blue_house1.png" }, "player_1": { "path": "res://assets/tiny_swords/buildings/red_house1.png" } }, "states": { "frame": {}, "build_50": {}, "ready": {} } },
+    "barracks": { "source": "tiny_swords_free_pack", "license": "Tiny Swords by Pixel Frog, local in-game derived use", "label": "BA", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "sprites": { "player_0": { "path": "res://assets/tiny_swords/buildings/blue_barracks.png" }, "player_1": { "path": "res://assets/tiny_swords/buildings/red_barracks.png" } }, "states": { "frame": {}, "build_50": {}, "ready": {} } },
+    "storehouse": { "source": "tiny_swords_free_pack", "license": "Tiny Swords by Pixel Frog, local in-game derived use", "label": "ST", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "sprites": { "player_0": { "path": "res://assets/tiny_swords/buildings/blue_house1.png" }, "player_1": { "path": "res://assets/tiny_swords/buildings/red_house1.png" } }, "states": { "frame": {}, "build_50": {}, "ready": {} } },
     "wall": { "source": "generated_internal", "license": "project_fallback", "label": "WA", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "states": { "frame": {}, "build_50": {}, "ready": {} } },
-    "tower": { "source": "generated_internal", "license": "project_fallback", "label": "TO", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "states": { "frame": {}, "build_50": {}, "ready": {} } }
+    "tower": { "source": "tiny_swords_free_pack", "license": "Tiny Swords by Pixel Frog, local in-game derived use", "label": "TO", "colors": { "player_0": "#8C6B38", "player_1": "#704040" }, "sprites": { "player_0": { "path": "res://assets/tiny_swords/buildings/blue_tower.png" }, "player_1": { "path": "res://assets/tiny_swords/buildings/red_tower.png" } }, "states": { "frame": {}, "build_50": {}, "ready": {} } }
   },
   "portraits": {
     "portrait_peasant": { "source": "generated_internal", "license": "project_fallback", "path": "" },

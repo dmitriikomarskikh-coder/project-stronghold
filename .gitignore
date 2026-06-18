@@ -3,4 +3,5 @@ build/
 *.tmp
 *.import
 export_credentials.cfg
-
+assets/_source/
+assets/tiny_swords/
